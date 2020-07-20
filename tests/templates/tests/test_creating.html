@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test creating</title>
+
+   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+</head>
+<body>
+  <div>
+    <h1 class="title">Создайте свой тест:</h1>
+      <form action="" method="post">  {% csrf_token %}
+          {{test.as_p}}
+          {{question.as_p}}
+           {{question.as_p}}
+           {{question.as_p}}
+     <button type="submit" class="btn btn-primary">Отправить</button>
+    </div>
+</form>
+</body>
+</html>
