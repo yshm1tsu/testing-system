@@ -55,7 +55,11 @@ ROOT_URLCONF = 'testingservice.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+<<<<<<< HEAD
         'DIRS': [os.path.join(BASE_DIR, 'templates')],
+=======
+        'DIRS': [],
+>>>>>>> test_creating
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -119,6 +123,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+<<<<<<< HEAD
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
@@ -126,3 +131,5 @@ STATICFILES_DIRS = [
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'cabinet'
 LOGOUT_REDIRECT_URL = ''
+=======
+>>>>>>> test_creating

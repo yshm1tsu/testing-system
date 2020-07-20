@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from .models import *
 
 class SignUpForm(UserCreationForm):
     username = forms.CharField(
@@ -38,7 +39,7 @@ class SignUpForm(UserCreationForm):
             }
         )
     )
-    
+
     error_messages = {
         'password_mismatch': 'Пароли должны совпадать'
     }
@@ -80,3 +81,15 @@ class LoginForm(AuthenticationForm):
     class Meta:
         model = User
         fields = ('username', 'password')
+=======
+
+
+class TestForm(forms.ModelForm):
+    class Meta:
+        model = Test
+        exclude = ["passed_quantiry"]
+
+class QuestionForm(forms.ModelForm):
+    class Meta:
+        model = Question
+        exclude = [""]

@@ -1,7 +1,9 @@
 from django.urls import path
+
 from django.contrib.auth import views as auth_views
 from tests.forms import LoginForm
 from . import views
+from django.urls import path
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -9,4 +11,9 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('logout/', views.logout, name='logout'),
     path('cabinet/', views.cabinet, name='cabinet')
+=======
+
+urlpatterns = [
+    path('', views.test_creating, name='test_creating'),
+
 ]
