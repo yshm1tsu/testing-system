@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Главная{% endblock title %}
+{% block content %}
+<div class="wrapper page-centered">
+    <div class="container">
+        <div class="text-center mb-5">
+            <a href="/login" class="btn btn-success btn-lg">Вход</a>
+            <a href="/register" class="btn btn-warning btn-lg">Регистрация</a>
+        </div>
+        <div class="row align-items-center justify-content-around">
+            <div class="form__wrapper join-form col-10 col-lg-4">
+                <form id="join-form">
+                    <h3 class="text-center">Пройти тест</h3>
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        <label for="join-form__name">Имя</label>
+                        <input type="text" class="form-control" id="join-form__name">
+                    </div>
+                    <div class="mb-4">
+                        <label for="join-form__id">ID теста</label>
+                        <input type="text" class="form-control" id="join-form__id">
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn">Пройти</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

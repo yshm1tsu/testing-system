@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Личный кабинет{% endblock title %}
+{% block content %}
+<header class="cabinet__header">
+    <div class="container">
+        <a href="#" class="btn btn-success">Создать тест</a>
+        <a href="/logout" class="btn btn-danger">Выйти</a>
+    </div>
+</header>
+<main class="cabinet__main">
+    <div class="container">
+        <div class="tools">
+            <div class="tools-text">Ваши тесты</div>
+        </div>
+        <div class="test-list">
+            <div class="test-item card">
+                <a href="#">
+                    <div class="card-body">
+                        <div class="test-item__title">Название теста</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock content %}
