@@ -1,8 +1,0 @@
-{% csrf_token %}
-
-{% for field in form %}
-    <div class="mb-4">
-        <label for="login-form__email">{{ field.label }}</label>
-        <input type="email" class="form-control" id="{{ field.id_for_label }}">
-    </div>
-{% endfor %}

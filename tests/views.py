@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
-from tests.forms import SignUpForm
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
-from tests.forms import SignUpForm
 from django.contrib.auth.decorators import login_required
+from tests.forms import SignUpForm
+
+from tests.models import Test
 
 def index(request):
     return render(request, 'tests/index.html')
@@ -30,4 +31,6 @@ def logout(request):
 
 @login_required
 def cabinet(request):
-    return render(request, 'tests/cabinet.html')
+    test_list = Test.objects.filter(author=request.user)
+    context = {'test_list': test_list}
+    return render(request, 'tests/cabinet.html', context)

@@ -12,15 +12,20 @@
         <div class="tools">
             <div class="tools-text">Ваши тесты</div>
         </div>
-        <div class="test-list">
-            <div class="test-item card">
-                <a href="#">
-                    <div class="card-body">
-                        <div class="test-item__title">Название теста</div>
-                    </div>
-                </a>
+        
+        {% if test_list.count == 0 %}
+            <h3 class="text-center">У вас нет созданных тестов</h3>
+        {% else %}
+            <div class="test-list">
+                <div class="test-item card">
+                    <a href="#">
+                        <div class="card-body">
+                            <div class="test-item__title">Название теста</div>
+                        </div>
+                    </a>
+                </div>
             </div>
-        </div>
+        {% endif %}
     </div>
 </main>
 {% endblock content %}
