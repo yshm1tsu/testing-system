@@ -16,7 +16,7 @@ def register(request):
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
             user = authenticate(username=username, password=password)
-            login(request, user)
+            auth_login(request, user)
             return redirect('index')
     else:
         form = SignUpForm()
