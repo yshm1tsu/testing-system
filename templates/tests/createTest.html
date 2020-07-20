@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Создание вопроса{% endblock title %}
+{% block content %}
+    <div class="wrapper page-centered">
+        <div class="form__wrapper test-creation-form col-10 col-lg-4 mb-5 mb-lg-0" id="register-form__wrapper">
+            <form action="{% url 'create_test' %}">
+                <h3 class="text-center">Создание теста</h3>
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="mb-4">
+                        {{ field.label_tag }}
+                        {{ field }}
+                    </div>
+                    {% for error in field.errors %}
+                        <p style="color: #510580">{{ error }}</p>
+                    {% endfor %}
+                {% endfor %}
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <div class="alert alert-danger">
+                                <strong>{{ error|escape }}</strong>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <div class="text-center mb-3">
+                    <button type="submit" class="btn">Далее</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

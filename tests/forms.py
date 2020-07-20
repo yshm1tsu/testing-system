@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from tests import models
 
 class SignUpForm(UserCreationForm):
     username = forms.CharField(
@@ -47,8 +48,8 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = ('username', 'password1', 'password2')
 
-
 class LoginForm(AuthenticationForm):
+
     username = forms.CharField(
         label='Имя пользователя',
         max_length=30,
@@ -80,3 +81,43 @@ class LoginForm(AuthenticationForm):
     class Meta:
         model = User
         fields = ('username', 'password')
+
+class CreateTestForm(forms.ModelForm):
+
+    name = forms.CharField(
+        label='Название теста',
+        max_length=30,
+        min_length=5,
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                "class": "form-control"
+            }
+        )
+    )
+
+    evaluated = forms.BooleanField(
+        label='С баллами',
+        required=True,
+        widget=forms.CheckboxInput(
+            attrs={
+                "class": "form-check-input"
+            }
+        )
+    )
+
+    questions_quantity = forms.CharField(
+        label='Кол-во вопросов',
+        max_length=30,
+        min_length=6,
+        required=True,
+        widget=forms.NumberInput(
+            attrs={
+                "class": "form-control"
+            }
+        )
+    )
+
+    class Meta:
+        model = models.Test
+        exclude = ["code", "passed_quantity", "author"]
