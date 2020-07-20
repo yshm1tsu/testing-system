@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
-from tests.forms import SignUpForm, TestForm, QuestionForm
+from tests.forms import SignUpForm
 
 from tests.models import Test
 
@@ -34,11 +34,3 @@ def cabinet(request):
     test_list = Test.objects.filter(author=request.user)
     context = {'test_list': test_list}
     return render(request, 'tests/cabinet.html', context)
-
-
-def test_creating(request):
-   test = TestForm(request.POST or None)
-   question = QuestionForm(request.POST or None)
-   if request.method == "POST" :
-        test = test.save()
-   return render(request, 'tests/test_creating.html',locals())
