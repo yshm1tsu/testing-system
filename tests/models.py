@@ -14,6 +14,6 @@ class Test(models.Model):
     name = models.CharField(max_length=30, verbose_name="Название теста")
     evaluated = models.BooleanField(verbose_name="Оцениваемый")
     questions_quantity = models.IntegerField(verbose_name="Количество вопросов")
-    passed_quantity = models.IntegerField(verbose_name="Количество прошедших")
+    passed_quantity = models.IntegerField(verbose_name="Количество прошедших", default=0)
     code = models.CharField(max_length=5, default=helpers.random_code, verbose_name="Код")
     author = models.ForeignKey(User, on_delete=models.CASCADE, null = True, verbose_name="Автор")

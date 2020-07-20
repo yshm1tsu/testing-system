@@ -6,6 +6,9 @@ from tests.forms import SignUpForm, CreateTestForm
 from tests.models import Test
 
 def index(request):
+    if request.user.is_authenticated:
+        return redirect('cabinet')
+
     return render(request, 'tests/index.html')
 
 def register(request):
@@ -41,7 +44,9 @@ def create_test(request):
 
     if request.method == 'POST':
         if form.is_valid():
-            form.save()
+            newTest = form.save(commit=False)
+            newTest.author = request.user
+            newTest.save()
             return redirect('cabinet')
 
     context = {'form': form}

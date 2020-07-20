@@ -16,15 +16,17 @@
         {% if test_list.count == 0 %}
             <h3 class="text-center">У вас нет созданных тестов</h3>
         {% else %}
-            <div class="test-list">
-                <div class="test-item card">
-                    <a href="#">
-                        <div class="card-body">
-                            <div class="test-item__title">Название теста</div>
-                        </div>
-                    </a>
+            {% for test in test_list %}
+                <div class="test-list">
+                    <div class="test-item card">
+                        <a href="#">
+                            <div class="card-body">
+                                <div class="test-item__title">{{ test.name }}</div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
-            </div>
+            {% endfor %}
         {% endif %}
     </div>
 </main>

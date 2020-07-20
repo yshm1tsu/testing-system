@@ -106,10 +106,8 @@ class CreateTestForm(forms.ModelForm):
         )
     )
 
-    questions_quantity = forms.CharField(
+    questions_quantity = forms.IntegerField(
         label='Кол-во вопросов',
-        max_length=30,
-        min_length=6,
         required=True,
         widget=forms.NumberInput(
             attrs={
