@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from tests.forms import SignUpForm, CreateTestForm
+from tests.models import Test, Question, Option
 
 from tests.models import Test
 
@@ -44,9 +45,28 @@ def create_test(request):
 
     if request.method == 'POST':
         if form.is_valid():
-            newTest = form.save(commit=False)
+            newTest = Test()
             newTest.author = request.user
+            newTest.name = request.POST['name']
             newTest.save()
+
+            max_question_index = request.POST.get('max_question_index')
+            for i in range(int(max_question_index)):
+                if request.POST.get('question_title_' + str(i), False):
+                    question = Question()
+                    question.test = newTest
+                    question.text = request.POST['question_title_' + str(i)]
+                    question.points = request.POST['question_points_' + str(i)]
+                    question.save()
+                    max_option_index = request.POST['question_form_options_index_' + str(i)]
+                    for j in range(int(max_option_index)):
+                        if request.POST.get('question_option_' + str(i) + '_' + str(j), False):
+                            option = Option()
+                            option.question = question
+                            option.text = request.POST['question_option_' + str(i) + '_' + str(j)]
+                            option.is_correct = bool(request.POST.get('question_option_is_correct_' + str(i) + '_' + str(j)))
+                            option.save()
+
             return redirect('cabinet')
 
     context = {'form': form}
@@ -62,13 +82,3 @@ def delete_test(request):
 
     return redirect('cabinet')
 
-@login_required
-def create_questions(request):
-
-    try:
-        test = Test.objects.get(code=request.GET['code'], author=request.user)
-    except:
-        return redirect('index')
-
-    context = {'questions': range(1, test.questions_quantity)}
-    return render(request, 'tests/createQuestions.html', context)

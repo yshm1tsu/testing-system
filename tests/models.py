@@ -6,14 +6,12 @@ from django.utils import timezone
 
 class Test(models.Model):
     name = models.CharField(max_length=30, verbose_name="Название теста")
-    evaluated = models.BooleanField(verbose_name="Оцениваемый")
     code = models.CharField(max_length=5, default=helpers.random_code, verbose_name="Код")
     author = models.ForeignKey(User, on_delete=models.CASCADE, null = True, verbose_name="Автор")
 
 class Question(models.Model):
     test = models.ForeignKey(Test,on_delete=models.CASCADE, null = True, verbose_name = "Тест")
     text = models.TextField(verbose_name="Текст вопроса")
-    answer = models.CharField(max_length=30, verbose_name="Ответ")
     points = models.IntegerField(default=0, verbose_name="Количество баллов за вопрос")
 
 

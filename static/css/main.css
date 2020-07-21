@@ -41,11 +41,6 @@ a:hover {
     box-shadow: 0 0 20px 1px #b5d900;
 }
 
-.test-creation-form {
-    background-color: #6ed1f5;
-    box-shadow: 0 0 20px 1px #6ed1f5;
-}
-
 .test-creation-form .btn {
     background-color: #510580;
     color: #fff;
@@ -117,4 +112,57 @@ a:hover {
 .test-item__icon {
     font-size: 16px;
     font-family: monospace;
+}
+
+/* TestCreationForm */
+
+.test-creation-form__test {
+    background-color: #6ed1f5;
+    box-shadow: 0 0 20px 1px #6ed1f5;
+}
+
+.test-creation-form__question {
+    background-color: #a3e6ff;
+    box-shadow: 0 0 20px 1px #6ed1f5;
+}
+
+.test-creation-form__question .table td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.test-creation-form__add-btn svg {
+    font-size: 36px;
+    cursor: pointer;
+    color: #510580;
+    transition: transform .1s ease-out;
+}
+
+.test-creation-form__add-btn svg:hover {
+    transform: scale(1.1);
+}
+
+.test-creation-form__submit-btn {
+}
+
+.test-creation-form__question__delete-icon {
+    font-size: 16px;
+    color: #d62013;
+    cursor: pointer;
+    transition: color .3s linear;
+}
+
+.test-creation-form__question__delete-icon:hover {
+    color: #a10b00;
+}
+
+.question-form__add-option-btn svg {
+    cursor: pointer;
+    color: #510580;
+    font-size: 24px;
+    transition: transform .1s linear;
+}
+
+.question-form__add-option-btn svg:hover {
+    transform: scale(1.1);
 }

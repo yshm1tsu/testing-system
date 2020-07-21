@@ -96,26 +96,15 @@ class CreateTestForm(forms.ModelForm):
         )
     )
 
-    evaluated = forms.BooleanField(
-        label='С баллами',
-        widget=forms.CheckboxInput(
-            attrs={
-                "class": "form-check-input"
-            }
-        )
-    )
-
-    questions_quantity = forms.IntegerField(
-        label='Кол-во вопросов',
-        required=True,
-        max_value=30,
-        widget=forms.NumberInput(
-            attrs={
-                "class": "form-control"
-            }
-        )
-    )
+    # evaluated = forms.BooleanField(
+    #     label='С баллами',
+    #     widget=forms.CheckboxInput(
+    #         attrs={
+    #             "class": "form-check-input"
+    #         }
+    #     )
+    # )
 
     class Meta:
         model = models.Test
-        exclude = ["code", "passed_quantity", "author"]
+        exclude = ["code", "author", "evaluated"]
