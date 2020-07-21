@@ -98,7 +98,6 @@ class CreateTestForm(forms.ModelForm):
 
     evaluated = forms.BooleanField(
         label='С баллами',
-        required=True,
         widget=forms.CheckboxInput(
             attrs={
                 "class": "form-check-input"
@@ -109,6 +108,7 @@ class CreateTestForm(forms.ModelForm):
     questions_quantity = forms.IntegerField(
         label='Кол-во вопросов',
         required=True,
+        max_value=30,
         widget=forms.NumberInput(
             attrs={
                 "class": "form-control"

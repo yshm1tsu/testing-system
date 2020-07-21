@@ -51,3 +51,24 @@ def create_test(request):
 
     context = {'form': form}
     return render(request, 'tests/createTest.html', context)
+
+@login_required
+def delete_test(request):
+    try:
+        test = Test.objects.get(code=request.GET['code'], author=request.user)
+        test.delete()
+    except:
+        return redirect('index')
+
+    return redirect('cabinet')
+
+@login_required
+def create_questions(request):
+
+    try:
+        test = Test.objects.get(code=request.GET['code'], author=request.user)
+    except:
+        return redirect('index')
+
+    context = {'questions': range(1, test.questions_quantity)}
+    return render(request, 'tests/createQuestions.html', context)
