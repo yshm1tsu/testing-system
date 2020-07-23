@@ -10,5 +10,6 @@ urlpatterns = [
     path('logout/', views.logout, name='logout'),
     path('cabinet/', views.cabinet, name='cabinet'),
     path('createTest/', views.create_test, name='create_test'),
-    path('deleteTest/', views.delete_test, name='delete_test')
+    path('deleteTest/', views.delete_test, name='delete_test'),
+    path('validateCreateTest/', views.validate_create_test, name='validate_create_test')
 ]

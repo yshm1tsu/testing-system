@@ -119,3 +119,29 @@ function deleteQuestionOption(index, opt_index) {
     el.remove()
     optionsCount.set(index, optionsCount.get(index) - 1)
 }
+
+const createTestForm = document.getElementById('createTestForm')
+createTestForm && createTestForm.addEventListener('submit', onCreateTestSubmit)
+
+function onCreateTestSubmit(event) {
+    formData = new FormData(createTestForm)
+    event.preventDefault()
+    document.querySelectorAll(`#${createTestForm.id} input, #${createTestForm.id} textarea`).forEach(el => el.classList.remove('error'))
+    validate()
+}
+
+async function validate() {
+    const data = {
+        method: 'POST',
+        body: formData
+    }
+    const response = await fetch('/validateCreateTest/', data)
+    const jsonData = await response.json()
+    if (jsonData.success === false) {
+        jsonData.errors.forEach(el => {
+            document.querySelector(`input[name=${el}], textarea[name=${el}]`).classList.add('error')
+        })
+    } else {
+        createTestForm.submit()
+    }
+}

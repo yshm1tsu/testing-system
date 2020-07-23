@@ -166,3 +166,8 @@ a:hover {
 .question-form__add-option-btn svg:hover {
     transform: scale(1.1);
 }
+
+.error {
+    border-color: #a10b00;
+    border-width: 3px;
+}

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from tests.forms import SignUpForm, CreateTestForm
 from tests.models import Test, Question, Option
 
@@ -71,6 +72,19 @@ def create_test(request):
 
     context = {'form': form}
     return render(request, 'tests/createTest.html', context)
+
+@login_required
+def validate_create_test(request):
+    if request.method == 'POST':
+        response_data = {'success': True, 'errors': []}
+        for key, value in request.POST.items():
+            if len(value) <= 0:
+                response_data['success'] = False
+                response_data['errors'].append(key)
+        
+        return JsonResponse(response_data)
+
+    return redirect('cabinet')
 
 @login_required
 def delete_test(request):
