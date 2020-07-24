@@ -14,9 +14,11 @@
                 </thead>
                 <tbody>
                     {% for result in results %}
-                        <td>{{ result.name }}</td>
-                        <td>{{ result.total_points }}</td>
-                        <td>{{ result.date }}</td>
+                        <tr>
+                            <td>{{ result.name }}</td>
+                            <td>{{ result.total_points }}</td>
+                            <td>{{ result.date }}</td>
+                        </tr>
                     {% endfor %}
                 </tbody>
             </table>
