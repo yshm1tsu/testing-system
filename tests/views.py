@@ -64,7 +64,7 @@ def create_test(request):
                             option = Option()
                             option.question = question
                             option.text = request.POST['question_option_' + str(i) + '_' + str(j)]
-                            option.is_correct = request.POST['question_option_is_correct_' + str(i)] == option.text
+                            option.is_correct = request.POST.get('question_option_is_correct_' + str(i), False) == option.text
                             option.save()
 
             return redirect('cabinet')
