@@ -9,21 +9,14 @@
         </div>
         <div class="row align-items-center justify-content-around">
             <div class="form__wrapper join-form col-10 col-lg-4">
-                <form id="join-form">
-                    <h3 class="text-center">Пройти тест</h3>
-                    {% csrf_token %}
-                    <div class="mb-4">
-                        <label for="join-form__name">Имя</label>
-                        <input type="text" class="form-control" id="join-form__name">
-                    </div>
-                    <div class="mb-4">
-                        <label for="join-form__id">ID теста</label>
-                        <input type="text" class="form-control" id="join-form__id">
-                    </div>
-                    <div class="text-center">
-                        <button type="submit" class="btn">Пройти</button>
-                    </div>
-                </form>
+                <h3 class="text-center">Пройти тест</h3>
+                <div class="mb-4">
+                    <label for="join-form__id">ID теста</label>
+                    <input type="text" class="form-control" id="join-code" name="code">
+                </div>
+                <div class="text-center">
+                    <button href="#" onClick="join(this)" class="btn">Пройти</button>
+                </div>
             </div>
         </div>
     </div>

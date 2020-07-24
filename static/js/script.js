@@ -151,6 +151,12 @@ function onPassTestSubmit(event) {
     }
 }
 
+function join(el) {
+    const code = document.getElementById('join-code').value
+    const link = `/passTest/${code}`
+    window.location.href = link
+}
+
 async function request(url, method = 'GET', body = null) {
     const response = await fetch(url, {method, body})
     const json = await response.json()
