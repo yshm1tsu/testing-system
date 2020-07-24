@@ -11,5 +11,7 @@ urlpatterns = [
     path('cabinet/', views.cabinet, name='cabinet'),
     path('createTest/', views.create_test, name='create_test'),
     path('deleteTest/', views.delete_test, name='delete_test'),
-    path('validateCreateTest/', views.validate_create_test, name='validate_create_test')
+    path('validateCreateTest/', views.validate_create_test, name='validate_create_test'),
+    path('passTest/<str:code>', views.pass_test, name='pass_test'),
+    path('result/<str:code>', views.result, name='result')
 ]

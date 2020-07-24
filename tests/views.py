@@ -2,10 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from django.db.models import Count
 from tests.forms import SignUpForm, CreateTestForm
-from tests.models import Test, Question, Option
-
-from tests.models import Test
+from tests.models import Test, Question, Option, Result
 
 def index(request):
     if request.user.is_authenticated:
@@ -36,7 +35,7 @@ def logout(request):
 
 @login_required
 def cabinet(request):
-    test_list = Test.objects.filter(author=request.user)
+    test_list = Test.objects.filter(author=request.user).annotate(passed_count=Count('result'))
     context = {'test_list': test_list}
     return render(request, 'tests/cabinet.html', context)
 
@@ -65,7 +64,7 @@ def create_test(request):
                             option = Option()
                             option.question = question
                             option.text = request.POST['question_option_' + str(i) + '_' + str(j)]
-                            option.is_correct = bool(request.POST.get('question_option_is_correct_' + str(i) + '_' + str(j)))
+                            option.is_correct = request.POST['question_option_is_correct_' + str(i)] == option.text
                             option.save()
 
             return redirect('cabinet')
@@ -96,3 +95,42 @@ def delete_test(request):
 
     return redirect('cabinet')
 
+def pass_test(request, code):
+
+    try:
+        test = Test.objects.get(code=code)
+        questions = Question.objects.filter(test=test)
+
+        if (request.method == 'POST'):
+            result = Result()
+            result.test = test
+            result.name = request.POST['name']
+            total_points = 0
+            for index, question in enumerate(questions):
+                option = Option.objects.get(question=question, text=request.POST['answer_' + str(index)])
+                if option.is_correct:
+                    total_points += question.points
+            
+            result.total_points = total_points
+            result.save()
+            return redirect('index')
+        
+        context = {'code': code, 'name': test.name, 'questions': questions}
+    except:
+        return redirect('index')
+
+    return render(request, 'tests/passTest.html', context)
+
+@login_required
+def result(request, code):
+    try:
+        test = Test.objects.get(code=code, author=request.user)
+        results = Result.objects.filter(test=test)
+        context = {'results': results}
+    except:
+        return redirect('index')
+
+    return render(request, 'tests/result.html', context)
+
+def not_found_404(request, exception = None):
+    return render('404.html')

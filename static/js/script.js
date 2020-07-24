@@ -2,15 +2,11 @@ function copyToClipboard(code) {
     const el = document.createElement('textarea')
     el.style.position = 'absolute'
     el.style.left = '-9999px'
-    el.value = code
+    el.value = `${document.location.host}/passTest/${code}`
     document.body.appendChild(el)
     el.select()
     document.execCommand('copy')
     document.body.removeChild(el)
-}
-
-function checkboxHandler(el) {
-    el.value = el.checked
 }
 
 function generateQuestionTemplate(index) {
@@ -34,8 +30,8 @@ function generateQuestionTemplate(index) {
                         <th></th>
                     </tr>
                 </table>
-                <div class="text-center question-form__add-option-btn" onClick="addQuestionOption(${index})">
-                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <div class="text-center question-form__add-option-btn">
+                    <svg onClick="addQuestionOption(${index})" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4a.5.5 0 0 0-1 0v3.5H4a.5.5 0 0 0 0 1h3.5V12a.5.5 0 0 0 1 0V8.5H12a.5.5 0 0 0 0-1H8.5V4z"/>
                     </svg>
                 </div>
@@ -53,7 +49,7 @@ function generateOptionTemplate(index, opt_index) {
             <input type="text" class="form-control col-8" name="question_option_${index}_${opt_index}"/>
         </td>
         <td>
-            <input type="checkbox" class="form-check-input col-4" value="false" name="question_option_is_correct_${index}_${opt_index}" onChange="checkboxHandler(this)">
+            <input type="radio" class="form-check-input col-4" value="false" name="question_option_is_correct_${index}" />
         </td>
         <td class="test-creation-form__question__delete-icon" onClick="deleteQuestionOption(${index}, ${opt_index})">
             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -124,24 +120,39 @@ const createTestForm = document.getElementById('createTestForm')
 createTestForm && createTestForm.addEventListener('submit', onCreateTestSubmit)
 
 function onCreateTestSubmit(event) {
-    formData = new FormData(createTestForm)
+    const formData = new FormData(createTestForm)
     event.preventDefault()
     document.querySelectorAll(`#${createTestForm.id} input, #${createTestForm.id} textarea`).forEach(el => el.classList.remove('error'))
-    validate()
+    document.querySelectorAll(`input[type="radio"]`).forEach(element => element.value = element.parentElement.previousElementSibling.children[0].value)
+    validateCreateForm(formData)
 }
 
-async function validate() {
-    const data = {
-        method: 'POST',
-        body: formData
-    }
-    const response = await fetch('/validateCreateTest/', data)
-    const jsonData = await response.json()
-    if (jsonData.success === false) {
-        jsonData.errors.forEach(el => {
+async function validateCreateForm(formData) {
+    const data = await request('/validateCreateTest/', 'POST', formData)
+    if (data.success === false) {
+        data.errors.forEach(el => {
             document.querySelector(`input[name=${el}], textarea[name=${el}]`).classList.add('error')
         })
     } else {
         createTestForm.submit()
     }
+}
+
+const passTestForm = document.getElementById('passTestForm')
+passTestForm && passTestForm.addEventListener('submit', onPassTestSubmit)
+
+function onPassTestSubmit(event) {
+    const formData = new FormData(passTestForm)
+    event.preventDefault()
+    if (formData.get('name')) {
+        passTestForm.submit()
+    } else {
+        document.querySelector('input[name="name"]').classList.add('error')
+    }
+}
+
+async function request(url, method = 'GET', body = null) {
+    const response = await fetch(url, {method, body})
+    const json = await response.json()
+    return json
 }
