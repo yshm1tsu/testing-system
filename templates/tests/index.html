@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Главная{% endblock title %}
+{% block content %}
+<div class="wrapper page-centered">
+    <div class="container">
+        <div class="text-center mb-5">
+            <a href="/login" class="btn btn-success btn-lg">Вход</a>
+            <a href="/register" class="btn btn-warning btn-lg">Регистрация</a>
+        </div>
+        <div class="row align-items-center justify-content-around">
+            <div class="form__wrapper join-form col-10 col-lg-4">
+                <h3 class="text-center">Пройти тест</h3>
+                <div class="mb-4">
+                    <label for="join-form__id">ID теста</label>
+                    <input type="text" class="form-control" id="join-code" name="code">
+                </div>
+                <div class="text-center">
+                    <button href="#" onClick="join(this)" class="btn">Пройти</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

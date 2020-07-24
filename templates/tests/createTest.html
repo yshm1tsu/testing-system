@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Создание теста{% endblock title %}
+{% block content %}
+    <div class="wrapper page-centered">
+        <div class="col-10 col-lg-4 mb-5 mb-lg-0">
+            <form action="{% url 'create_test' %}" method="POST" id="createTestForm">
+                <div class="form__wrapper test-creation-form__test mb-5">
+                    <h3 class="text-center">Создание теста</h3>
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="mb-4">
+                            {{ field.label_tag }}
+                            {{ field }}
+                        </div>
+                        {% for error in field.errors %}
+                            <p style="color: #510580">{{ error }}</p>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+                <input type="hidden" name="max_question_index" id="question_max_index" />
+                <div id="question-forms"></div>
+                <div class="test-creation-form__add-btn text-center mb-4">
+                    <svg onClick="addQuestionForm()" width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus-circle-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4a.5.5 0 0 0-1 0v3.5H4a.5.5 0 0 0 0 1h3.5V12a.5.5 0 0 0 1 0V8.5H12a.5.5 0 0 0 0-1H8.5V4z"/>
+                    </svg>
+                </div>
+                <div class="text-center">
+                    <button id="test-creation-submit" type="submit" class="btn btn-primary test-creation-form__submit-btn" disabled>Создать</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

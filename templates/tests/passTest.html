@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Прохождение теста{% endblock title %}
+{% block content %}
+    <div class="wrapper page-centered">
+        <div class="col-10 col-lg-4">
+            <h5 class="text-center mb-5">{{ name }}</h5>
+            <form action="{% url 'pass_test' code %}" id="passTestForm" method='POST'>
+                {% csrf_token %}
+                <div class="form__wrapper test-pass-form__name mb-5">
+                    <div class="mb-4">
+                        <label for="name" class="font-weight-bold text-center d-block mb-2">Ваше имя</label>
+                        <input type="text" class="form-control" name="name" id="name" />
+                    </div>
+                </div>
+                {% for question in questions %}
+                    <div class="test-pass-form__question form__wrapper mb-5">
+                        <div class="test-pass-form__question__header mb-3">
+                            <span class="font-weight-bold">Вопрос #{{ forloop.counter }}</span>
+                            <span class="font-weight-bold float-right">Баллов: {{ question.points }}</span>
+                        </div>
+                        <p class="text-justify test-pass-form__question__text">{{ question.text }}</p>
+                        <div class="test-pass-form__question__options">
+                            <p class="font-weight-bold">Варианты ответа</p>
+                            <table class="table table-borderless">
+                                {% for option in question.option_set.all %}
+                                    <tr class="border-orange">
+                                        <td>{{ option.text }}</td>
+                                        <td>
+                                            <input type="radio" class="form-check-input" name="answer_{{forloop.parentloop.counter0}}" value="{{ option.text }}" />
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success">Отправить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
